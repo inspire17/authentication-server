@@ -1,8 +1,10 @@
 package com.inspire17.auth.sec;
 
 
+import com.inspire17.auth.exceptions.ServerException;
 import com.inspire17.auth.model.UserWrapper;
 import com.inspire17.auth.service.UserDetailsService;
+import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -41,15 +43,15 @@ public class JwtFilter extends OncePerRequestFilter {
             @NonNull HttpServletResponse response,
             @NonNull FilterChain filterChain
     ) throws ServletException, IOException {
-
-        final String authHeader = request.getHeader("Authorization");
-
-        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            filterChain.doFilter(request, response);
-            return;
-        }
-
         try {
+            final String authHeader = request.getHeader("Authorization");
+
+            if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+                filterChain.doFilter(request, response);
+                return;
+            }
+
+
             final String jwt = authHeader.substring(7);
             final String username = jwtUtil.extractUsername(jwt);
 
@@ -71,8 +73,8 @@ public class JwtFilter extends OncePerRequestFilter {
             }
 
             filterChain.doFilter(request, response);
-        } catch (Exception exception) {
-            handlerExceptionResolver.resolveException(request, response, null, exception);
+        } catch (ExpiredJwtException expiredJwtException) {
+            handlerExceptionResolver.resolveException(request, response, null, new ServerException("Token expired. Relogin.", 401));
         }
     }
 }

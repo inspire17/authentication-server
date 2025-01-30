@@ -72,9 +72,11 @@ mvn clean package && java -jar target/authentication_server.jar --spring.profile
 ```shell
 curl --location 'http://localhost:8080/api/auth/signup' \
 --header 'Content-Type: application/json' \
---data '{
-    "username":"achu",
-    "password":"ichu"
+--data-raw '{
+    "username": "john_doe",
+    "emailId": "john@example.com",
+    "mobileNumber": "9876543210",
+    "password": "Password@123"
 }'
 
 ```
@@ -83,8 +85,8 @@ curl --location 'http://localhost:8080/api/auth/signup' \
 curl --location 'http://localhost:8080/api/auth/user_login' \
 --header 'Content-Type: application/json' \
 --data '{
-    "username":"abhi",
-    "password":"ichu"
+    "username":"john@example.com",
+    "password":"Password@123"
 }'
 ```
 
@@ -98,6 +100,10 @@ curl --location 'http://localhost:8080/api/auth/refresh_token' \
 curl --location 'http://localhost:8080/api/auth/username_check?q=ab'
 ```
 
+```shell
+curl --location 'http://localhost:8080/api/hello' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdXRob3JpdGllcyI6W3siYXV0aG9yaXR5IjoiVVNFUlMifV0sInN1YiI6ImpvaG5fZG9lIiwiaWF0IjoxNzM4MjQ1MjQwLCJleHAiOjE3MzgyODEyNDB9.1BPkYZj9SsAld_gqPfh56SjTg4cH8gmcM3OhoAMQQx8'
+```
 ---
 # *Happy coding! 🚀🔥*
 ---
