@@ -8,9 +8,9 @@ This project is a **Spring Boot-based Authentication Server** that provides **JW
 ## 🚀 Features
 - ✅ **User Signup & Login**
 - ✅ **JWT Token Generation & Validation**
-- ✅ **Role-Based Access Control**
+- ❌ **Role-Based Access Control**
 - ✅ **Token Refresh Support**
-- ✅ **Single Active Token Per User**
+- ❌ **Single Active Token Per User**
 - ✅ **Spring Profiles (`dev`, `prod`) Support**
 
 ---
